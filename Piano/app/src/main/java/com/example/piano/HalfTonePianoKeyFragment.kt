@@ -3,12 +3,16 @@ package com.example.piano
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_full_tonekey.view.*
+import com.example.piano.databinding.FragmentHalftonekeyBinding
+import kotlinx.android.synthetic.main.fragment_halftonekey.view.*
 
-class halftonekey : Fragment() {
+class HalfTonePianoKeyFragment : Fragment() {
 
-    private var _binding:FragmentHalftonePianoKeyBinding? = null
+    private var _binding:FragmentHalftonekeyBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var note:String
@@ -21,21 +25,19 @@ class halftonekey : Fragment() {
         arguments?.let {
             note = it.getString("NOTE") ?: "?"
 
-            // ?: "?" = if note returns null, the note is set to ?.
-            // ?: er en elvis operator, brukes til å sette en standardverdi. Prøv å unngå bruk av denne.
-        }
+         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        _binding = FragmentHalftonePianoKeyBinding.inflate(inflater)
+        _binding = FragmentHalftonekeyBinding.inflate(inflater)
         val view = binding.root
 
         view.blackPianoKeyButton.setOnTouchListener(object: View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 when(event?.action){
-                    MotionEvent.ACTION_DOWN -> this@HalftonePianoKeyFragment.onKeyDown?.invoke(note)
-                    MotionEvent.ACTION_UP -> this@HalftonePianoKeyFragment.onKeyUp?.invoke(note)
+                    MotionEvent.ACTION_DOWN -> this@HalfTonePianoKeyFragment.onKeyDown?.invoke(note)
+                    MotionEvent.ACTION_UP -> this@HalfTonePianoKeyFragment.onKeyUp?.invoke(note)
                 }
                 return true
             }
@@ -49,7 +51,7 @@ class halftonekey : Fragment() {
 
         @JvmStatic
         fun newInstance(note: String) =
-            HalftonePianoKeyFragment().apply {
+            HalfTonePianoKeyFragment().apply {
                 arguments = Bundle().apply {
                     putString("NOTE", note)
 

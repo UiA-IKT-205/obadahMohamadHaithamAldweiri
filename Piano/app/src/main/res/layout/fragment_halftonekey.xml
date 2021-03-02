@@ -3,12 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".halftonekey">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HalfTonePianoKeyFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+    <Button
+        android:id="@+id/blackPianoKeyButton"
+        android:background="@drawable/pianoshapesofkey"
+        android:layout_width="30dp"
+        android:layout_height="160dp"
+        android:layout_margin="0.6dp"
+        app:layout_constraintHeight_percent="0.40"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/black" />
 </FrameLayout>
