@@ -35,7 +35,7 @@ class FullTonePianoKeyFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        _binding = FragmentFullTonekeyBinding.inflate(inflater)
+        _binding = FragmentFullTonekeyBinding.inflate(layoutInflater)
         val view = binding.root
 
         view.whiteKeyButton.setOnTouchListener(object: View.OnTouchListener{
