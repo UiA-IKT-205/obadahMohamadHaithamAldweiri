@@ -15,25 +15,34 @@ import java.io.File
 import java.io.FileOutputStream
 import android.os.SystemClock
 import android.widget.Toast
+import android.net.Uri
+import androidx.core.net.toUri
+
+
+
 
 import com.example.piano.data.Note
 import kotlinx.android.synthetic.main.fragment_piano_layout.*
 
+
 class PianoLayout : Fragment() {
 
-    private var _binding:FragmentPianoLayoutBinding? = null
+    private var _binding: FragmentPianoLayoutBinding? = null
     private val binding get() = _binding!!
 
     private val whiteFullTones = listOf("C", "D", "E", "F", "G", "A", "B", "C2", "D2", "E2", "F2", "G2", "A2", "B2") // 14 her
 
     private val blackHalfTones = listOf("C#", "D#", "F#", "G#", "A#", "C#2", "D#2", "F#2", "G#2", "A#2") // 10 her
 
-    private var noteSheet:MutableList<Note> = mutableListOf<Note>()
+    private var noteSheet: MutableList<Note> = mutableListOf<Note>()
 
-    private var recordingIsOn:Boolean  = false
+    private var recordingIsOn: Boolean = false
 
+    var onSave: ((file: Uri) -> Unit)? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState)}
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -49,7 +58,7 @@ class PianoLayout : Fragment() {
 
         whiteFullTones.forEach() {
             val whitePianoKey = FullTonePianoKeyFragment.newInstance(it)
-            var startTimeOfNote:Long = 0
+            var startTimeOfNote: Long = 0
 
             whitePianoKey.onKeyDown = { note ->
                 startTimeOfNote = SystemClock.elapsedRealtime() - timerecorderChronometer.base
@@ -57,7 +66,7 @@ class PianoLayout : Fragment() {
             }
 
             whitePianoKey.onKeyUp = {
-                val thenotetimeduration= SystemClock.elapsedRealtime() - timerecorderChronometer.base
+                val thenotetimeduration = SystemClock.elapsedRealtime() - timerecorderChronometer.base
 
                 val note = Note(it, startTimeOfNote, thenotetimeduration)
 
@@ -74,19 +83,16 @@ class PianoLayout : Fragment() {
         fragmentTransactiontwhite.commit()
 
 
-
-
-
         val fragmentmanagerblack = childFragmentManager
         val fragmentTransactionblack = fragmentmanagerblack.beginTransaction()
 
 
-        blackHalfTones.forEach() {note ->
+        blackHalfTones.forEach() { note ->
             val blackPianoKey = newInstance(note)
-            var startTimeOfNote:Long =0
+            var startTimeOfNote: Long = 0
 
 
-            blackPianoKey.onKeyDown = {note ->
+            blackPianoKey.onKeyDown = { note ->
                 startTimeOfNote = SystemClock.elapsedRealtime() - timerecorderChronometer.base
                 println("Black piano key down: $note")
             }
@@ -109,7 +115,7 @@ class PianoLayout : Fragment() {
 
 
         view.startStopRecordingButton.setOnClickListener {
-            if(!recordingIsOn){
+            if (!recordingIsOn) {
                 noteSheet.clear()
                 startRecordingTimer()
                 startStopRecordingButton.text = "stop_recording"
@@ -118,7 +124,7 @@ class PianoLayout : Fragment() {
                 startStopRecordingButton.text = "reset_the_recording"
             }
         }
-        view.savingthenotesheetButton.setOnClickListener{
+        view.savingthenotesheetButton.setOnClickListener {
             var fileName = view.fileNameInput.text.toString()
             val filePath = this.activity?.getExternalFilesDir(null)
             val newtuneFile = (File(filePath, fileName))
@@ -130,7 +136,6 @@ class PianoLayout : Fragment() {
                 fileName.isEmpty() -> Toast.makeText(activity, "enter the file name here", Toast.LENGTH_SHORT).show()
                 filePath == null -> Toast.makeText(activity, "it does not exist", Toast.LENGTH_SHORT).show()
                 newtuneFile.exists() -> Toast.makeText(activity, "the file already exists", Toast.LENGTH_SHORT).show()
-
 
 
                 else -> {
@@ -151,23 +156,66 @@ class PianoLayout : Fragment() {
                 }
             }
         }
+
+        //starts here
+
+        view.savingthenotesheetButton.setOnClickListener {
+            var fileName = "Melodies file"
+            if (noteSheet.count() > 0 && fileName.isNotEmpty()) {
+                fileName = "$fileName.mp3"
+                val content: String = noteSheet.map {
+                    it.toString()
+                }.reduce { acc, s -> acc + s + "\n" }
+                saveFile(fileName, content)
+            } else {
+                print("todo")
+            }
+        }
+        //ends here
         return view
     }
 
-    private fun startRecordingTimer(){
-        if (!recordingIsOn){
+    private fun startRecordingTimer() {
+        if (!recordingIsOn) {
             timerecorderChronometer.base = SystemClock.elapsedRealtime()
             timerecorderChronometer.start()
             recordingIsOn = true
         }
     }
 
-    private fun stopRecordingTimer(){
-        if (recordingIsOn){
+    private fun stopRecordingTimer() {
+        if (recordingIsOn) {
             timerecorderChronometer.stop()
             recordingIsOn = false
         }
     }
+
+
+    private fun saveFile(filename:String, content:String){
+        val path = this.activity?.getExternalFilesDir(null)
+        if (path != null){
+            val file = File(path, filename)
+            FileOutputStream(file, true).bufferedWriter().use { writer ->
+                writer.write(content)
+            }
+
+            this.onSave?.invoke(file.toUri())
+        }
+        else{
+            print("Todo")
+        }
+    }
 }
 
-private fun String.isEmpty(): Boolean { return isEmpty() }
+
+
+
+
+    // change the location of this parantese
+//}
+//
+
+
+    //
+//going to have new parantese her
+//
