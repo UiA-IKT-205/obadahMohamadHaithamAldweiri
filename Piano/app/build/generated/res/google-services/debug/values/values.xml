@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">766305895833-9q3lljven4badk5s3rsdft179scmvp4n.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">766305895833</string>
+    <string name="google_api_key" translatable="false">AIzaSyApedw4n1ouMK2HsoA5gyDqitNEcZnkr3k</string>
+    <string name="google_app_id" translatable="false">1:766305895833:android:a8f0dbed2b866464d2bf08</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyApedw4n1ouMK2HsoA5gyDqitNEcZnkr3k</string>
+    <string name="google_storage_bucket" translatable="false">piano-f5c5f.appspot.com</string>
+    <string name="project_id" translatable="false">piano-f5c5f</string>
+</resources>

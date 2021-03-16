@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PianoLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+
+
+    <LinearLayout
+        android:id="@+id/layoutforwhitepianokeys"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/layoutforblackpianokeys"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fileNameInput"
+        android:paddingStart="10dp"
+        />
+
+    <Button
+        android:id="@+id/savingthenotesheetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/savefile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/fileNameInput"
+        android:layout_margin="150dp"
+        />
+
+    <EditText
+        android:id="@+id/fileNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:ems="20"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor"
+        />
+
+
+
+    <Chronometer
+        android:id="@+id/timerecorderChronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/savingthenotesheetButton" />
+
+    <Button
+        android:id="@+id/startStopRecordingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timerecorderChronometer"
+        android:text="@string/startrec"
+        />
+
+
+
+
+</FrameLayout>

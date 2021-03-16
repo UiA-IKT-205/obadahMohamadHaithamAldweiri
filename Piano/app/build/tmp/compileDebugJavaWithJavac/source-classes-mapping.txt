@@ -1,0 +1,10 @@
+com/example/piano/databinding/ActivityMainBinding.java
+ com.example.piano.databinding.ActivityMainBinding
+com/example/piano/databinding/FragmentHalftonekeyBinding.java
+ com.example.piano.databinding.FragmentHalftonekeyBinding
+com/example/piano/BuildConfig.java
+ com.example.piano.BuildConfig
+com/example/piano/databinding/FragmentFullTonekeyBinding.java
+ com.example.piano.databinding.FragmentFullTonekeyBinding
+com/example/piano/databinding/FragmentPianoLayoutBinding.java
+ com.example.piano.databinding.FragmentPianoLayoutBinding
