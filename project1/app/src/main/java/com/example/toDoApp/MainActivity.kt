@@ -17,7 +17,7 @@ import com.example.toDoApp.items.data.item
 import com.example.toDoApp.items.data.item.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.toDoApp.R.id.progressBar1
-
+import com.example.toDoApp.items.secondScreenActivity
 
 
 class ItemHolder{
@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onItemClicked(item: item): Unit {
         ItemHolder.PickedItem = item
-
+        val intent = Intent(this, secondScreenActivity::class.java)
+        startActivity(intent)
     }
 }
