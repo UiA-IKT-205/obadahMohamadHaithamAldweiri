@@ -34,18 +34,18 @@ class secondScreenActivity: AppCompatActivity() {
         binding = ItemDetailsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val receivedItem = ItemHolder.PickedItem
         val bundle = intent.extras
         val title = bundle?.getString("title")
 
 
-       // val todos= jobDepositoryManager.instance
-        //todos.onjobs = {}
 
         val joblist = arrayListOf<String>()
         val adapter = ArrayAdapter<String>(
             this, R.layout.simple_list_item_multiple_choice, joblist
         )
+
 
         listView.adapter =  adapter
         adapter.notifyDataSetChanged()
@@ -80,10 +80,12 @@ class secondScreenActivity: AppCompatActivity() {
                                           view, i, l ->
             android.widget.Toast.makeText(
                 this,
-                "You Selected the item --> " + joblist.get(i),
+                "You Selected the following job --> " + joblist.get(i),
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         }
+
+
 
         delete.setOnClickListener {
             val sublists = binding.job.text.toString()
@@ -93,11 +95,12 @@ class secondScreenActivity: AppCompatActivity() {
             while (item >= 0) {
                 if (position.get(item))
                 {
+                    deleteJobsFromDataBase2(joblist.get(item), sublists)
                     adapter.remove(joblist.get(item))
-
 
                 }
                 item--
+
             }
 
             binding.progressBar.progress = joblist.size
@@ -122,11 +125,20 @@ class secondScreenActivity: AppCompatActivity() {
 
         val sublists = binding.job.text.toString()
         val lista = sublists
-        Log.d(TAG, "this is sublists ${lista}+ and thamin is${sublists}")
+
         getListsFromDataBase2(sublists, joblist)
 
     }
 
+
+    private fun deleteJobsFromDataBase2(joblist: String, sublist: String) {
+        val db = Firebase.firestore
+        val documentreferance = db.collection(sublist).document(joblist).delete()
+
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+
+}
 
 
     private fun getListsFromDataBase2(sublist: String, joblist: ArrayList<String>) {
