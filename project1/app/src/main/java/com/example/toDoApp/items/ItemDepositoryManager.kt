@@ -19,7 +19,7 @@ class ItemDepositoryManager {
 
 
 
-fun startlist() {
+fun load(url: String, context: Context) {
     itemCollection = mutableListOf(
         item("item1"),
         item("item2"),
