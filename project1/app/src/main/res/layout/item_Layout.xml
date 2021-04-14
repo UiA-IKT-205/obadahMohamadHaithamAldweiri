@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:contentPadding="24dp"
+    app:cardCornerRadius="4dp"
+    android:backgroundTint="@color/teal_700">
+
+    <LinearLayout
+        android:id="@+id/test1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:text="item name" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="delete" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="400dp"
+            android:layout_height="30dp"
+            android:max="8"
+            android:layout_marginTop="68dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
