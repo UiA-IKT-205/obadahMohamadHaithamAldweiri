@@ -14,6 +14,9 @@ import com.example.toDoApp.ItemHolder
 import com.example.toDoApp.databinding.ActivityMainBinding
 import com.example.toDoApp.databinding.ItemDetailsActivityBinding
 import com.example.toDoApp.items.data.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 import kotlinx.android.synthetic.main.item_layout.*
 import kotlinx.android.synthetic.main.item_details_activity.*
@@ -24,6 +27,7 @@ class secondScreenActivity: AppCompatActivity() {
     private val TAG:String = " toDoApp:secondScreenActivity"
     private lateinit var binding: ItemDetailsActivityBinding
     private lateinit var item: item
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +35,21 @@ class secondScreenActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         val receivedItem = ItemHolder.PickedItem
+        val bundle = intent.extras
+        val title = bundle?.getString("title")
 
+
+       // val todos= jobDepositoryManager.instance
+        //todos.onjobs = {}
 
         val joblist = arrayListOf<String>()
         val adapter = ArrayAdapter<String>(
             this, R.layout.simple_list_item_multiple_choice, joblist
         )
 
+        listView.adapter =  adapter
+        adapter.notifyDataSetChanged()
+        binding.progressBar.progress = joblist.size
 
 
         add.setOnClickListener {
@@ -50,7 +62,7 @@ class secondScreenActivity: AppCompatActivity() {
             binding.progressBar.progress = joblist.size
 
             adapter.notifyDataSetChanged()
-
+            addtodatabase2(item, binding.job.text.toString())
 
 
             editText.text.clear()
@@ -108,12 +120,42 @@ class secondScreenActivity: AppCompatActivity() {
 
         binding.job.text = item.job
 
-
-
-
+        val sublists = binding.job.text.toString()
+        val lista = sublists
+        Log.d(TAG, "this is sublists ${lista}+ and thamin is${sublists}")
+        getListsFromDataBase2(sublists, joblist)
 
     }
 
+
+
+    private fun getListsFromDataBase2(sublist: String, joblist: ArrayList<String>) {
+        val docRef = db.collection(sublist)
+        docRef.get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    var title = document.get("job")
+                    joblist.add(title.toString())
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+            }
+        binding.progressBar.progress = joblist.size
+
+    }
+
+    private fun addtodatabase2(item: job, title: String){
+
+        val list1 = hashMapOf("job" to item.Details, "ischecked" to false)
+        val ref: CollectionReference = db.collection(title)
+        ref.document(item.Details).set(list1)
+            .addOnSuccessListener { documentReferance -> Log.d(TAG, "document added with id:{$documentReferance.id}")
+            }
+            .addOnFailureListener{e-> Log.w(TAG, "error could not add document", e )
+            }
+    }
 
 
 }
