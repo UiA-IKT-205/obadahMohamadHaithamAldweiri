@@ -3,21 +3,16 @@ package com.example.toDoApp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.SparseBooleanArray
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.ArrayAdapter
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.toDoApp.databinding.ActivityMainBinding
 import com.example.toDoApp.items.ItemCollectionAdapter
 import com.example.toDoApp.items.ItemDepositoryManager
 import com.example.toDoApp.items.data.item
-import com.example.toDoApp.items.data.item.*
-import kotlinx.android.synthetic.main.activity_main.*
-import com.example.toDoApp.R.id.progressBar1
+
+
 import com.example.toDoApp.items.secondScreenActivity
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.app
@@ -25,8 +20,9 @@ import com.google.firebase.database.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
+
 import com.google.firebase.firestore.ktx.firestore
+import kotlinx.android.synthetic.main.item_details_activity.*
 
 
 class ItemHolder{
@@ -35,8 +31,6 @@ class ItemHolder{
 
         var PickedItem: item? = null
     }
-
-
 }
 
 class MainActivity : AppCompatActivity() {
@@ -53,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         val ref: CollectionReference = db.collection("lists")
         ref.document(title).set(lista)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         ItemDepositoryManager.instance.load(getString(R.string.app_name), this)
 
 
+
+
         binding.saveBt.setOnClickListener {
             val job = binding.job1.text.toString()
 
@@ -91,6 +88,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, secondScreenActivity::class.java)
             intent.putExtra("title", job)
         }
+
+
     }
 
     private fun signInAnonymously() {
