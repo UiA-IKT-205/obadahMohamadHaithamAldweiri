@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.toDoApp.databinding.ItemLayoutBinding
 import com.example.toDoApp.items.data.item
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ItemCollectionAdapter(private var items:MutableList<item>,
                             private val onItemClicked:
@@ -34,6 +36,17 @@ class ItemCollectionAdapter(private var items:MutableList<item>,
         holder.bind(item,onItemClicked)
 
 
+        holder.apply {
+            binding.delete.setOnClickListener{
+                val item1 = items[position]
+                items.remove(item1)
+                deleteListsFromDataBase(item.job)
+                notifyDataSetChanged()
+            }
+
+
+        }
+
 
 
     }
@@ -54,6 +67,13 @@ class ItemCollectionAdapter(private var items:MutableList<item>,
 
 
 
+    private fun deleteListsFromDataBase(doc: String) {
+        val db = Firebase.firestore
+        val docRef = db.collection("lists")
+        docRef.document(doc).delete()
+
+
+    }
 
 
 }

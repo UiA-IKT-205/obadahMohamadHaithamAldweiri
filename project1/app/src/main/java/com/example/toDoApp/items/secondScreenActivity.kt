@@ -13,8 +13,9 @@ import com.example.toDoApp.*
 import com.example.toDoApp.ItemHolder
 import com.example.toDoApp.databinding.ActivityMainBinding
 import com.example.toDoApp.databinding.ItemDetailsActivityBinding
-import com.example.toDoApp.items.data.item
-import kotlinx.android.synthetic.main.item_Layout.*
+import com.example.toDoApp.items.data.*
+
+import kotlinx.android.synthetic.main.item_layout.*
 import kotlinx.android.synthetic.main.item_details_activity.*
 import kotlinx.android.synthetic.main.item_details_activity.delete
 
